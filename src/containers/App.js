@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
 import classes from "./App.css";
-import Persons from "../components/Persons/Persons"
-import Cockpit from "../components/Cockpit/Cockpit"
+import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     console.log("App.js constructor called");
@@ -17,11 +16,12 @@ class App extends Component {
       ],
       otherState: "some other value",
       showPersons: false,
+      showCockpit: true,
     };
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log('[App.js] getDerivedStateFromProps', props);
+    console.log("[App.js] getDerivedStateFromProps", props);
     return state;
   }
 
@@ -30,11 +30,11 @@ class App extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("App.js shouldComponentUpdate called")
+    console.log("App.js shouldComponentUpdate called");
     return true;
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     console.log("App.js componentDidUpdate called");
   }
 
@@ -71,31 +71,35 @@ class App extends Component {
 
   render() {
     let persons = null;
-    console.log("App.js render called")
+    console.log("App.js render called");
     if (this.state.showPersons) {
       persons = (
         <div>
-        <Persons 
-          persons={this.state.persons}
-          clicked={this.deletePersonHandler}
-          changed ={this.nameChangedHandler}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
           />
-          
         </div>
       );
-
     }
-
-    
 
     return (
       <div className={classes.App}>
-        <Cockpit 
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: !this.state.showCockpit });
+          }}
+        >
+          {this.state.showCockpit ? <span>Remove</span> : <span>restore</span>}{" "}
+          Cockpit
+        </button>
+        {this.state.showCockpit ?<Cockpit
           title={this.props.appTitle}
-          persons={this.state.persons} 
+          persons={this.state.persons}
           showPersons={this.state.showPersons}
           buttonClick={this.togglePersonsHandler}
-          />
+        />:null}
         {persons}
       </div>
     );

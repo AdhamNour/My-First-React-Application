@@ -7,13 +7,27 @@ const Cockpit = (props) => {
     setTimeout(() =>{
       alert("Saved data");
     },1000)
+    return () => {
+      console.log("Cockpit.js cleanup works")
+    }
   },[props.persons]);
+
   useEffect(() =>{
-    console.log("Cockpit.js useEffect that depends on no thing called");
+    console.log("Cockpit.js useEffect that depends on no thing called so it would be called in the first render cycle only");
     setTimeout(() =>{
       alert("Nothing Happened just Saying hello");
     },200);
+    return () => {
+      console.log("Cockpit.js cleanup works 2ndtime")
+    }
   },[])
+
+  useEffect(() =>{
+    console.log("Cockpit.js useEffect that runs every render cycle that doesn't depends on anything")
+    return () => {
+      console.log("Cockpit.js cleanup works 3rd time")
+    }
+  })
 
     const assignedClasses = [];
     if (props.persons.length <= 2) {
