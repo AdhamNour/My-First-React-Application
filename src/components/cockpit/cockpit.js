@@ -3,8 +3,17 @@ import classes from "./Cockpit.css"
 
 const Cockpit = (props) => {
   useEffect(() =>{
-    console.log("Cockpit.js useEffect called");
-  })
+    console.log("Cockpit.js useEffect that depends on props.persons called");
+    setTimeout(() =>{
+      alert("Saved data");
+    },1000)
+  },[props.persons]);
+  useEffect(() =>{
+    console.log("Cockpit.js useEffect that depends on no thing called");
+    setTimeout(() =>{
+      alert("Nothing Happened just Saying hello");
+    },200);
+  },[])
 
     const assignedClasses = [];
     if (props.persons.length <= 2) {
